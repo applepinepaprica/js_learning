@@ -1,14 +1,25 @@
-let canvas = document.querySelector('canvas');
-let ctx = canvas.getContext('2d');
+let ballsCanvas = document.getElementById('ballsCanvas');
+let buttonCanvas = document.getElementById('buttonCanvas');
+let button = document.querySelector('button');
+let gameOver = document.querySelector('h2');
 
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+let ballsctx = ballsCanvas.getContext('2d');
+let buttonctx = buttonCanvas.getContext('2d');
+
+let width = ballsCanvas.width = buttonCanvas.width = window.innerWidth;
+let height = ballsCanvas.height = buttonCanvas.height = window.innerHeight;
 
 let balls = [];
 
-canvas.addEventListener('click', test, false);
-ctx.fillStyle = 'rgba(0,0,0)';
-ctx.fillRect(0,0,width,height);
+ballsctx.fillStyle = 'rgba(45,45,45)';
+ballsctx.fillRect(0,0,width,height);
+
+buttonctx.fillStyle = 'rgba(210,210,210)';
+buttonctx.fillRect(0,0,width,height);
+
+ballsCanvas.addEventListener('click', test, false);
+ballsCanvas.style.visibility = "hidden";
+gameOver.style.visibility = "hidden";
 
 function random(min,max) {
   let num = Math.floor(Math.random()*(max-min)) + min;
@@ -23,10 +34,10 @@ function Ball(x, y, color, size) {
 }
 
 Ball.prototype.draw = function() {
-  ctx.beginPath();
-  ctx.fillStyle = this.color;
-  ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-  ctx.fill();
+  ballsctx.beginPath();
+  ballsctx.fillStyle = this.color;
+  ballsctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+  ballsctx.fill();
 };
 
 function test(event){
@@ -34,9 +45,14 @@ function test(event){
   let y = event.pageY;
   let element = balls[balls.length - 1];
   if (Math.sqrt((x-element.x)*(x-element.x) + (y-element.y)*(y-element.y)) < element.size) {
-    newBall();
+    ballsCanvas.style.visibility = "hidden";
+    buttonCanvas.style.visibility = "visible";
+    button.style.visibility = "visible";
   } else {
-    alert('Game over!');
+    ballsCanvas.style.visibility = "hidden";
+    buttonCanvas.style.visibility = "visible";
+    gameOver.style.visibility = "visible";
+    gameOver.innerHTML = "GAME OVER <br/> result = " + (balls.length - 1);
   }
 }
 
@@ -52,4 +68,9 @@ function newBall() {
   ball.draw();
 }
 
-newBall();
+function showBalls() {
+  ballsCanvas.style.visibility = "visible";
+  buttonCanvas.style.visibility = "hidden";
+  button.style.visibility = "hidden";
+  newBall();
+}
