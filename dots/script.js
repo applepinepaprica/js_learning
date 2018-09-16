@@ -52,7 +52,7 @@ function test(event){
     ballsCanvas.style.visibility = "hidden";
     buttonCanvas.style.visibility = "visible";
     gameOver.style.visibility = "visible";
-    gameOver.innerHTML = "GAME OVER <br/> " + (balls.length - 1);
+    gameOver.innerHTML = "GAME OVER <br/> number of correctly clicked dots: " + (balls.length - 1);
   }
 }
 
