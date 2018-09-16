@@ -49,10 +49,14 @@ function test(event){
     buttonCanvas.style.visibility = "visible";
     button.style.visibility = "visible";
   } else {
-    ballsCanvas.style.visibility = "hidden";
-    buttonCanvas.style.visibility = "visible";
-    gameOver.style.visibility = "visible";
-    gameOver.innerHTML = "GAME OVER <br/> number of correctly clicked dots: " + (balls.length - 1);
+    balls.forEach((el) => {
+      if (Math.sqrt((x-el.x)*(x-el.x) + (y-el.y)*(y-el.y)) < el.size) {
+        ballsCanvas.style.visibility = "hidden";
+        buttonCanvas.style.visibility = "visible";
+        gameOver.style.visibility = "visible";
+        gameOver.innerHTML = "GAME OVER <br/> number of correctly clicked dots: " + (balls.length - 1); 
+      }
+    });
   }
 }
 
